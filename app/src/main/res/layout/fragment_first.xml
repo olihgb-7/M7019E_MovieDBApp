@@ -1,29 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".FirstFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/movie_1"
-        layout="@layout/movie_list_item"/>
+    <data>
 
-    <include
-        android:id="@+id/movie_2"
-        layout="@layout/movie_list_item"/>
+        <variable
+            name="movies"
+            type="com.ltu.m7019e.m7019e_moviedbapp.database.Movies" />
+    </data>
 
-    <include
-        android:id="@+id/movie_3"
-        layout="@layout/movie_list_item"/>
 
-    <include
-        android:id="@+id/movie_4"
-        layout="@layout/movie_list_item"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/movie_5"
-        layout="@layout/movie_list_item"/>
+        <LinearLayout
+            android:id="@+id/movie_list_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".FirstFragment">
 
-</LinearLayout>
+            <include
+                android:id="@+id/movie_1"
+                layout="@layout/movie_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:movie="@{movies.list[0]}" />
+
+            <include
+                android:id="@+id/movie_2"
+                layout="@layout/movie_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:movie="@{movies.list[1]}" />
+
+            <include
+                android:id="@+id/movie_3"
+                layout="@layout/movie_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:movie="@{movies.list[2]}" />
+
+            <include
+                android:id="@+id/movie_4"
+                layout="@layout/movie_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:movie="@{movies.list[3]}" />
+
+            <include
+                android:id="@+id/movie_5"
+                layout="@layout/movie_list_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                bind:movie="@{movies.list[4]}" />
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
