@@ -6,14 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.ltu.m7019e.m7019e_moviedbapp.database.Movies
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieListBinding
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.MovieListItemBinding
+import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieListViewModel
+import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieListViewModelFactory
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class MovieListFragment : Fragment() {
+
+    private lateinit var viewModel: MovieListViewModel
+    private lateinit var viewModelFactory: MovieListViewModelFactory
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
@@ -23,15 +30,24 @@ class MovieListFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_list, container, false)
-        val movies = Movies()
+        _binding = FragmentMovieListBinding.inflate(inflater)
 
-        movies.list.forEach { movie ->
-            val movieListItemBinding: MovieListItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_list_item, container, false)
-            movieListItemBinding.movie = movie
+        val application = requireNotNull(this.activity).application
+        viewModelFactory = MovieListViewModelFactory(application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MovieListViewModel::class.java)
 
-            binding.movieListLl.addView(movieListItemBinding.root)
-        }
+        viewModel.movieList.observe(
+            viewLifecycleOwner, { movieList ->
+                movieList.forEach { movie ->
+                    val movieListItemBinding: MovieListItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_list_item, container, false)
+                    movieListItemBinding.movie = movie
+                    movieListItemBinding.root.setOnClickListener {
+                        this.findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFagment(movie))
+                    }
+                    binding.movieListLl.addView(movieListItemBinding.root)
+                }
+            }
+        )
 
         return binding.root
     }
