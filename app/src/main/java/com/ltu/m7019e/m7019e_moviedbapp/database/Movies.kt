@@ -8,6 +8,7 @@ class Movies {
     init {
         list.add(
             Movie(
+                1,
                 "Raya and the Last Dragon",
                 "/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg",
                 "/9xeEGUZjgiKlI69jwIOi0hjKUIk.jpg",
@@ -17,6 +18,7 @@ class Movies {
         )
         list.add(
             Movie(
+                2,
                 "Sentinelle",
                 "/fFRq98cW9lTo6di2o4lK1qUAWaN.jpg",
                 "/6TPZSJ06OEXeelx1U1VIAt0j9Ry.jpg",
@@ -26,6 +28,7 @@ class Movies {
         )
         list.add(
             Movie(
+                3,
                 "Zack Snyder's Justice League",
                 "/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
                 "/pcDc2WJAYGJTTvRSEIpRZwM3Ola.jpg",
@@ -35,6 +38,7 @@ class Movies {
         )
         list.add(
             Movie(
+                4,
                 "Tom & Jerry",
                 "/6KErczPBROQty7QoIsaa6wJYXZi.jpg",
                 "/z7HLq35df6ZpRxdMAE0qE3Ge4SJ.jpg",
@@ -44,6 +48,7 @@ class Movies {
         )
         list.add(
             Movie(
+                5,
                 "Below Zero",
                 "/dWSnsAGTfc8U27bWsy2RfwZs0Bs.jpg",
                 "/srYya1ZlI97Au4jUYAktDe3avyA.jpg",
@@ -53,6 +58,7 @@ class Movies {
         )
         list.add(
             Movie(
+                6,
                 "Raya and the Last Dragon",
                 "/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg",
                 "/9xeEGUZjgiKlI69jwIOi0hjKUIk.jpg",
@@ -62,6 +68,7 @@ class Movies {
         )
         list.add(
             Movie(
+                7,
                 "Sentinelle",
                 "/fFRq98cW9lTo6di2o4lK1qUAWaN.jpg",
                 "/6TPZSJ06OEXeelx1U1VIAt0j9Ry.jpg",
@@ -71,6 +78,7 @@ class Movies {
         )
         list.add(
             Movie(
+                8,
                 "Zack Snyder's Justice League",
                 "/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
                 "/pcDc2WJAYGJTTvRSEIpRZwM3Ola.jpg",
@@ -80,6 +88,7 @@ class Movies {
         )
         list.add(
             Movie(
+                9,
                 "Tom & Jerry",
                 "/6KErczPBROQty7QoIsaa6wJYXZi.jpg",
                 "/z7HLq35df6ZpRxdMAE0qE3Ge4SJ.jpg",
@@ -89,6 +98,7 @@ class Movies {
         )
         list.add(
             Movie(
+                10,
                 "Below Zero",
                 "/dWSnsAGTfc8U27bWsy2RfwZs0Bs.jpg",
                 "/srYya1ZlI97Au4jUYAktDe3avyA.jpg",
