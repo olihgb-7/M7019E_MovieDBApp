@@ -8,22 +8,42 @@
     <fragment
         android:id="@+id/MovieListFragment"
         android:name="com.ltu.m7019e.m7019e_moviedbapp.MovieListFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/movie_list_fragment_label"
         tools:layout="@layout/fragment_movie_list">
 
         <action
             android:id="@+id/action_MovieListFragment_to_MovieDetailFagment"
-            app:destination="@id/MovieDetailFragment" />
+            app:destination="@id/MovieDetailFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/MovieDetailFragment"
         android:name="com.ltu.m7019e.m7019e_moviedbapp.MovieDetailFragment"
-        android:label="@string/second_fragment_label"
+        android:label="@string/movie_detail_fragment_label"
         tools:layout="@layout/fragment_movie_detail">
 
         <action
             android:id="@+id/action_MovieDetailFragment_to_MovieListFragment"
-            app:destination="@id/MovieListFragment" />
+            app:destination="@id/MovieListFragment"
+            app:popUpTo="@id/MovieListFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="movie"
+            app:argType="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
+        <action
+            android:id="@+id/action_MovieDetailFragment_to_ThirdFragment"
+            app:destination="@id/ThirdFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/ThirdFragment"
+        android:name="com.ltu.m7019e.m7019e_moviedbapp.ThirdFragment"
+        android:label="ThirdFragment" >
+        <action
+            android:id="@+id/action_ThirdFragment_to_MovieDetailFragment"
+            app:destination="@id/MovieDetailFragment"
+            app:popUpTo="@id/MovieDetailFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="movie"
             app:argType="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />

@@ -7,6 +7,9 @@
         <variable
             name="movie"
             type="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
+        <variable
+            name="movieDetail"
+            type="com.ltu.m7019e.m7019e_moviedbapp.model.MovieDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +36,47 @@
             android:text="@{movie.title}"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_detail_backdrop" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_backdrop"
+            tools:text="Movie Title" />
+
+        <TextView
+            android:id="@+id/movie_detail_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/movie_genres_format(movieDetail.genres.toString())}"
+            app:layout_constraintStart_toStartOf="@id/movie_detail_title"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_title"
+            tools:text="Genres" />
+
+        <TextView
+            android:id="@+id/movie_detail_homepage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/movie_homepage_format(movieDetail.homepage)}"
+            app:layout_constraintStart_toStartOf="@+id/movie_detail_genres"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_genres"
+            tools:text="Homepage" />
+
+        <TextView
+            android:id="@+id/movie_detail_imdb_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{@string/movie_imdb_format(movieDetail.imdb_id)}"
+            app:layout_constraintStart_toStartOf="@+id/movie_detail_homepage"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_homepage"
+            tools:text="IMDB_id" />
+
+        <Button
+            android:id="@+id/next_to_third_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            app:layout_constraintBottom_toTopOf="@+id/back_to_movie_list"
+            app:layout_constraintEnd_toEndOf="@+id/back_to_movie_list"
+            app:layout_constraintStart_toStartOf="@+id/back_to_movie_list" />
 
         <Button
             android:id="@+id/back_to_movie_list"
@@ -44,5 +87,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

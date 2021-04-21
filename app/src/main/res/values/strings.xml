@@ -3,12 +3,13 @@
     <string name="action_load_popular_movies">Popular Movies</string>
     <string name="action_load_top_rated_movies">Top Rated Movies</string>
     <string name="action_load_saved_movies">Saved Movies</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="movie_genres_format">Genres: %s</string>
+    <string name="movie_homepage_format">Homepage: %s</string>
+    <string name="movie_imdb_format">IMDB Page: https://www.imdb.com/title/%s</string>
+
+    <string name="movie_list_fragment_label">Movie List Fragment</string>
+    <string name="movie_detail_fragment_label">Movie Detail Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
