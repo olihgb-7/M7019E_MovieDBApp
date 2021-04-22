@@ -38,7 +38,8 @@
     <fragment
         android:id="@+id/ThirdFragment"
         android:name="com.ltu.m7019e.m7019e_moviedbapp.ThirdFragment"
-        android:label="ThirdFragment" >
+        android:label="ThirdFragment"
+        tools:layout="@layout/fragment_third">
         <action
             android:id="@+id/action_ThirdFragment_to_MovieDetailFragment"
             app:destination="@id/MovieDetailFragment"

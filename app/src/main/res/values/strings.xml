@@ -9,7 +9,8 @@
 
     <string name="movie_list_fragment_label">Movie List Fragment</string>
     <string name="movie_detail_fragment_label">Movie Detail Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="next_fragment">Next Fragment</string>
+    <string name="previous_fragment">Previous Fragment</string>
+    <string name="placeholder_text">PLACEHOLDER TEXT</string>
 
 </resources>

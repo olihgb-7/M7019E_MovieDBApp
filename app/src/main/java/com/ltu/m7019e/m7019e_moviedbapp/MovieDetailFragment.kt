@@ -1,5 +1,6 @@
 package com.ltu.m7019e.m7019e_moviedbapp
 
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.ltu.m7019e.m7019e_moviedbapp.database.MoviesDetail
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieDetailBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
+import com.ltu.m7019e.m7019e_moviedbapp.model.MovieDetail
 
 
 /**
@@ -22,6 +24,7 @@ class MovieDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var movie: Movie
+    private lateinit var movieDetail: MovieDetail
     private lateinit var movieDetailHomepage: String
     private lateinit var movieDetailImbdId: String
 
@@ -34,13 +37,11 @@ class MovieDetailFragment : Fragment() {
         movie = MovieDetailFragmentArgs.fromBundle(requireArguments()).movie
         binding.movie = movie
 
-        MoviesDetail().list.forEach { movieDetail ->
-            if (movie.id == movieDetail.id) {
-                movieDetailHomepage = movieDetail.homepage
-                movieDetailImbdId = movieDetail.imdb_id
-                binding.movieDetail = movieDetail
-            }
-        }
+        // Handling the Movie Details for LAB 2
+        movieDetail = MoviesDetail().list.find {movieDetail -> movieDetail.id == movie.id }!! // Find the correct MovieDetail object from teh MoviesDetail database
+        movieDetailHomepage = movieDetail.homepage // Set the movie detail homepage
+        movieDetailImbdId = movieDetail.imdb_id // Set the movie detail midb_id
+        binding.movieDetail = movieDetail // Bind the MovieDetail object to the view
 
         return binding.root
     }
@@ -48,24 +49,26 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Back button to go to movie list
         binding.backToMovieList.setOnClickListener {
             findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieListFragment())
         }
 
+        // TODO: Change the name of third fragment later on
+        // Next button to go to the "third fragment"
         binding.nextToThirdFragment.setOnClickListener {
-            findNavController().navigate(
-                MovieDetailFragmentDirections.actionMovieDetailFragmentToThirdFragment(
-                    movie
-                )
-            )
+            // Send movie as argument to handle correct behaviour when moving back from "third fragment"
+            findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToThirdFragment(movie))
         }
 
+        // Click listener for the homepage text, start intent to go to browser
         binding.movieDetailHomepage.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(movieDetailHomepage)
             startActivity(intent)
         }
 
+        // Click listener for the imdb_id text, start intent to go to imdb app
         binding.movieDetailImdbId.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse("https://www.imdb.com/title/$movieDetailImbdId")
