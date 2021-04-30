@@ -7,12 +7,17 @@
         <variable
             name="movie"
             type="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
+
+        <variable
+            name="clickListener"
+            type="com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieListClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movie_list_item_cl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(movie)}">
 
         <ImageView
             android:id="@+id/movie_poster"

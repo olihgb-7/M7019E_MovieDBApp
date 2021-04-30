@@ -18,6 +18,12 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
             return _movieList
         }
 
+    private val _navigateToMovieDetail = MutableLiveData<Movie>()
+    val navigateToMovieDetail: LiveData<Movie>
+        get() {
+            return _navigateToMovieDetail
+        }
+
     init {
         _movieList.postValue(Movies().list)
     }
@@ -32,5 +38,13 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
         viewModelScope.launch {
             _movieList.value?.let { movieDatabaseDao.insert(it.get(0)) }
         }
+    }
+
+    fun onMovieListItemClicked(movie: Movie) {
+        _navigateToMovieDetail.value = movie
+    }
+
+    fun onMovieDetailNavigated() {
+        _navigateToMovieDetail.value = null
     }
 }

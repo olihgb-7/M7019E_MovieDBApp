@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieListAdapter
+import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieListClickListener
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabase
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.database.Movies
@@ -44,18 +46,38 @@ class MovieListFragment : Fragment() {
         viewModelFactory = MovieListViewModelFactory(movieDatabaseDao, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieListViewModel::class.java)
 
-        viewModel.movieList.observe(
-            viewLifecycleOwner, { movieList ->
-                movieList.forEach { movie ->
-                    val movieListItemBinding: MovieListItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_list_item, container, false)
-                    movieListItemBinding.movie = movie
-                    movieListItemBinding.root.setOnClickListener {
-                        this.findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFagment(movie))
-                    }
-                    binding.movieListLl.addView(movieListItemBinding.root)
-                }
+        val movieListAdapter = MovieListAdapter(
+            MovieListClickListener { movie ->
+                viewModel.onMovieListItemClicked(movie)
+            })
+        binding.movieListRv.adapter = movieListAdapter
+        viewModel.movieList.observe( viewLifecycleOwner, { movieList ->
+            movieList?.let {
+                movieListAdapter.submitList(movieList)
             }
-        )
+        })
+
+        viewModel.navigateToMovieDetail.observe(viewLifecycleOwner, { movie ->
+            movie?.let {
+                this.findNavController().navigate(
+                    MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFagment(movie)
+                )
+                viewModel.onMovieDetailNavigated()
+            }
+        })
+
+//        viewModel.movieList.observe(
+//            viewLifecycleOwner, { movieList ->
+//                movieList.forEach { movie ->
+//                    val movieListItemBinding: MovieListItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_list_item, container, false)
+//                    movieListItemBinding.movie = movie
+//                    movieListItemBinding.root.setOnClickListener {
+//                        this.findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFagment(movie))
+//                    }
+//                    binding.movieListLl.addView(movieListItemBinding.root)
+//                }
+//            }
+//        )
 
         setHasOptionsMenu(true)
 
