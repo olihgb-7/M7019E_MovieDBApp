@@ -18,12 +18,19 @@
             android:id="@+id/movie_list_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:spanCount="3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>
+
+<!--
+LAB3:
+Changed layoutManager from androidx.recyclerview.widget.LinearLayoutManager to androidx.recyclerview.widget.GridLayoutManager
+Added app:spanCount
+-->

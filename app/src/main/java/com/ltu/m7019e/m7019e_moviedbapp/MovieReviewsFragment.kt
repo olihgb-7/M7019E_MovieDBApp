@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentThirdBinding
+import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieReviewsBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
-import timber.log.Timber
 
 
-class ThirdFragment : Fragment() {
+class MovieReviewsFragment : Fragment() {
 
-    private var _binding: FragmentThirdBinding? = null
+    private var _binding: FragmentMovieReviewsBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var movie: Movie
@@ -23,9 +22,9 @@ class ThirdFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentThirdBinding.inflate(inflater)
+        _binding = FragmentMovieReviewsBinding.inflate(inflater)
 
-        movie = ThirdFragmentArgs.fromBundle(requireArguments()).movie
+        movie = MovieReviewsFragmentArgs.fromBundle(requireArguments()).movie
 
         return binding.root
     }
@@ -34,7 +33,7 @@ class ThirdFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backToMovieDetail.setOnClickListener {
-            findNavController().navigate(ThirdFragmentDirections.actionThirdFragmentToMovieDetailFragment(movie))
+            findNavController().navigate(MovieReviewsFragmentDirections.actionMovieReviewsFragmentToMovieDetailFragment(movie))
         }
     }
 }

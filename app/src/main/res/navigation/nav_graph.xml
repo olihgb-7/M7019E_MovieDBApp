@@ -31,17 +31,17 @@
             android:name="movie"
             app:argType="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
         <action
-            android:id="@+id/action_MovieDetailFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment"
+            android:id="@+id/action_MovieDetailFragment_to_MovieReviewsFragment"
+            app:destination="@id/MovieReviewsFragment"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
-        android:id="@+id/ThirdFragment"
-        android:name="com.ltu.m7019e.m7019e_moviedbapp.ThirdFragment"
-        android:label="ThirdFragment"
-        tools:layout="@layout/fragment_third">
+        android:id="@+id/MovieReviewsFragment"
+        android:name="com.ltu.m7019e.m7019e_moviedbapp.MovieReviewsFragment"
+        android:label="MovieReviewsFragment"
+        tools:layout="@layout/fragment_movie_reviews">
         <action
-            android:id="@+id/action_ThirdFragment_to_MovieDetailFragment"
+            android:id="@+id/action_MovieReviewsFragment_to_MovieDetailFragment"
             app:destination="@id/MovieDetailFragment"
             app:popUpTo="@id/MovieDetailFragment"
             app:popUpToInclusive="true" />

@@ -54,11 +54,10 @@ class MovieDetailFragment : Fragment() {
             findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieListFragment())
         }
 
-        // TODO: Change the name of third fragment later on
-        // Next button to go to the "third fragment"
+        // Next button to go to the MovieReviewFragment
         binding.nextToThirdFragment.setOnClickListener {
-            // Send movie as argument to handle correct behaviour when moving back from "third fragment"
-            findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToThirdFragment(movie))
+            // Send movie as argument to handle correct behaviour when moving back from MovieReviewFragment
+            findNavController().navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieReviewsFragment(movie))
         }
 
         // Click listener for the homepage text, start intent to go to browser
