@@ -7,11 +7,26 @@
         <variable
             name="movieTrailer"
             type="com.ltu.m7019e.m7019e_moviedbapp.model.MovieTrailer" />
+        <variable
+            name="clickListener"
+            type="com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieTrailerClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <VideoView
+            android:id="@+id/movie_trailer_vv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/movie_trailer_name"
@@ -20,8 +35,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@{movieTrailer.name}"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_trailer_vv"
             tools:text="Movie Trailer Name" />
 
         <TextView
@@ -30,10 +47,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="@{movieTrailer.key}"
+            android:onClick="@{() -> clickListener.onClick(movieTrailer)}"
+            android:text="@{movieTrailer.site}"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/movie_trailer_name"
             app:layout_constraintTop_toBottomOf="@+id/movie_trailer_name"
             tools:text="Movie Trailer Link" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

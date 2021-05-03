@@ -10,5 +10,8 @@ data class MovieTrailer (
     var name: String,
 
     @Json(name = "key")
-    var key: String
+    var key: String,
+
+    @Json(name = "site")
+    var site: String
 )

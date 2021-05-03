@@ -1,19 +1,23 @@
 package com.ltu.m7019e.m7019e_moviedbapp
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.VideoView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieReviewsAdapter
+import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieTrailerClickListener
 import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieTrailersAdapter
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieReviewsAndTrailersBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
+import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieReviewsAndTrailersViewModel
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieReviewsAndTrailersViewModelFactory
-import timber.log.Timber
 
 
 class MovieReviewsAndTrailersFragment : Fragment() {
@@ -48,11 +52,23 @@ class MovieReviewsAndTrailersFragment : Fragment() {
         })
 
         // Setup for movie trailer list in the layout
-        val movieTrailersAdapter = MovieTrailersAdapter()
+        val movieTrailersAdapter = MovieTrailersAdapter(
+            MovieTrailerClickListener { trailer ->
+                viewModel.onTrailerItemClicked(trailer)
+            })
         binding.movieTrailersRv.adapter = movieTrailersAdapter
         viewModel.trailerList.observe(viewLifecycleOwner, { trailerList ->
             trailerList?.let {
                 movieTrailersAdapter.submitList(trailerList)
+            }
+        })
+
+        viewModel.navigateToTrailerLink.observe(viewLifecycleOwner, { trailer ->
+            trailer?.let {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(Constants.YOUTUBE_BASE_URL + trailer.key)
+                startActivity(intent)
+                viewModel.onTrailerNavigated()
             }
         })
 
@@ -63,7 +79,11 @@ class MovieReviewsAndTrailersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backToMovieDetail.setOnClickListener {
-            findNavController().navigate(MovieReviewsAndTrailersFragmentDirections.actionMovieReviewsAndTrailersFragmentToMovieDetailFragment(movie))
+            findNavController().navigate(
+                MovieReviewsAndTrailersFragmentDirections.actionMovieReviewsAndTrailersFragmentToMovieDetailFragment(
+                    movie
+                )
+            )
         }
     }
 }

@@ -9,9 +9,6 @@ class MovieTrailerResponse {
     @Json(name = "id")
     var id: Long = 0
 
-    @Json(name = "page")
-    var page: Int = 0
-
     @Json(name = "results")
     var results: List<MovieTrailer> = listOf()
 }

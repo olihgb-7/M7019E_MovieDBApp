@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieReview
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieTrailer
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieReviewResponse
@@ -27,6 +28,12 @@ class MovieReviewsAndTrailersViewModel(movieId: Long, application: Application) 
             return _trailerList
         }
 
+    private val _navigateToTrailerLink = MutableLiveData<MovieTrailer>()
+    val navigateToTrailerLink: LiveData<MovieTrailer>
+        get() {
+            return _navigateToTrailerLink
+        }
+
     init {
         getMovieReviews()
         getMovieTrailers()
@@ -44,5 +51,13 @@ class MovieReviewsAndTrailersViewModel(movieId: Long, application: Application) 
             val movieTrailerResponse: MovieTrailerResponse = TMDBApi.movieListRetrofitService.getMovieTrailers("$id/videos")
             _trailerList.value = movieTrailerResponse.results
         }
+    }
+
+    fun onTrailerItemClicked(movieTrailer: MovieTrailer) {
+        _navigateToTrailerLink.value = movieTrailer
+    }
+
+    fun onTrailerNavigated() {
+        _navigateToTrailerLink.value = null
     }
 }
