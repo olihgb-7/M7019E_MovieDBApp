@@ -13,6 +13,7 @@ import com.ltu.m7019e.m7019e_moviedbapp.database.MoviesDetail
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieDetailBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieDetail
+import timber.log.Timber
 
 
 /**
@@ -37,11 +38,14 @@ class MovieDetailFragment : Fragment() {
         movie = MovieDetailFragmentArgs.fromBundle(requireArguments()).movie
         binding.movie = movie
 
+
         // Handling the Movie Details for LAB 2
-        movieDetail = MoviesDetail().list.find {movieDetail -> movieDetail.id == movie.id }!! // Find the correct MovieDetail object from teh MoviesDetail database
+        /*
+        movieDetail = MoviesDetail().list.find {movieDetail -> movieDetail.id == movie.id }!! // Find the correct MovieDetail object from the MoviesDetail database
         movieDetailHomepage = movieDetail.homepage // Set the movie detail homepage
-        movieDetailImbdId = movieDetail.imdb_id // Set the movie detail midb_id
+        movieDetailImbdId = movieDetail.imdb_id // Set the movie detail imdb_id
         binding.movieDetail = movieDetail // Bind the MovieDetail object to the view
+         */
 
         return binding.root
     }

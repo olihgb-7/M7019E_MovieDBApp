@@ -16,6 +16,7 @@ import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.database.Movies
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieListBinding
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.MovieListItemBinding
+import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieListViewModel
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieListViewModelFactory
 import timber.log.Timber
@@ -66,18 +67,23 @@ class MovieListFragment : Fragment() {
             }
         })
 
-//        viewModel.movieList.observe(
-//            viewLifecycleOwner, { movieList ->
-//                movieList.forEach { movie ->
-//                    val movieListItemBinding: MovieListItemBinding = DataBindingUtil.inflate(inflater, R.layout.movie_list_item, container, false)
-//                    movieListItemBinding.movie = movie
-//                    movieListItemBinding.root.setOnClickListener {
-//                        this.findNavController().navigate(MovieListFragmentDirections.actionMovieListFragmentToMovieDetailFagment(movie))
-//                    }
-//                    binding.movieListLl.addView(movieListItemBinding.root)
-//                }
-//            }
-//        )
+        viewModel.dataFetchStatus.observe(viewLifecycleOwner, { status ->
+            status?.let {
+                when(status) {
+                    DataFetchStatus.LOADING -> {
+                        binding.statusImage.visibility = View.VISIBLE
+                        binding.statusImage.setImageResource(R.drawable.loading_animation)
+                    }
+                    DataFetchStatus.ERROR -> {
+                        binding.statusImage.visibility = View.VISIBLE
+                        binding.statusImage.setImageResource(R.drawable.ic_connection_error)
+                    }
+                    DataFetchStatus.DONE -> {
+                        binding.statusImage.visibility = View.GONE
+                    }
+                }
+            }
+        })
 
         setHasOptionsMenu(true)
 
@@ -88,22 +94,19 @@ class MovieListFragment : Fragment() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.action_load_popular_movies -> {
-                true
+                viewModel.getPopularMovies()
             }
             R.id.action_load_top_rated_movies -> {
-                viewModel.addMovie()
-                Timber.i("Adding a dummy Movie")
-                true
+                viewModel.getTopRatedMovies()
             }
             R.id.action_load_saved_movies -> {
                 viewModel.getSavedMovies()
-                Timber.i("Getting saved movie details")
-                true
             }
             else -> super.onOptionsItemSelected(item)
         }
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

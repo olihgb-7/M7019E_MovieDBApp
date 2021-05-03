@@ -12,5 +12,6 @@
     <string name="next_fragment">Next Fragment</string>
     <string name="previous_fragment">Previous Fragment</string>
     <string name="placeholder_text">PLACEHOLDER TEXT</string>
+    <string name="movies_are_being_loaded">Movies Are being loaded</string>
 
 </resources>

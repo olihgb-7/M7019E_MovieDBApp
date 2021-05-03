@@ -8,9 +8,17 @@ import androidx.lifecycle.viewModelScope
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.database.Movies
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
+import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
+import com.ltu.m7019e.m7019e_moviedbapp.network.MovieResponse
 import kotlinx.coroutines.launch
 
 class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, application: Application) : AndroidViewModel(application) {
+
+    private val _dataFetchStatus = MutableLiveData<DataFetchStatus>()
+    val dataFetchStatus: LiveData<DataFetchStatus>
+        get() {
+            return _dataFetchStatus
+        }
 
     private val _movieList = MutableLiveData<List<Movie>>()
     val movieList: LiveData<List<Movie>>
@@ -25,7 +33,36 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
         }
 
     init {
-        _movieList.postValue(Movies().list)
+        getPopularMovies()
+        _dataFetchStatus.value = DataFetchStatus.LOADING
+    }
+
+    fun getPopularMovies() {
+        viewModelScope.launch {
+            try{
+                val movieResponse: MovieResponse = TMDBApi.movieListRetrofitService.getPopularMovies()
+                _movieList.value = movieResponse.results
+                _dataFetchStatus.value = DataFetchStatus.DONE
+            }
+            catch (e: Exception) {
+                _dataFetchStatus.value = DataFetchStatus.ERROR
+                _movieList.value = arrayListOf()
+            }
+        }
+    }
+
+    fun getTopRatedMovies() {
+        viewModelScope.launch {
+            try{
+                val movieResponse: MovieResponse = TMDBApi.movieListRetrofitService.getTopRatedMovies()
+                _movieList.value = movieResponse.results
+                _dataFetchStatus.value = DataFetchStatus.DONE
+            }
+            catch (e: Exception) {
+                _dataFetchStatus.value = DataFetchStatus.ERROR
+                _movieList.value = arrayListOf()
+            }
+        }
     }
 
     fun getSavedMovies() {
