@@ -12,5 +12,6 @@
     <string name="reviews_video_label">Reviews and Videos</string>
     <string name="back_label">Back</string>
     <string name="placeholder_text">PLACEHOLDER TEXT</string>
+    <string name="movies_are_being_loaded">Movies Are being loaded</string>
 
 </resources>

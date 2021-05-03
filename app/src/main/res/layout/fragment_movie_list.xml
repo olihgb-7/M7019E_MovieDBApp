@@ -14,6 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/status_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/movies_are_being_loaded"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_list_rv"
+            app:layout_constraintEnd_toEndOf="@+id/movie_list_rv"
+            app:layout_constraintStart_toStartOf="@+id/movie_list_rv"
+            app:layout_constraintTop_toTopOf="@+id/movie_list_rv"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movie_list_rv"
             android:layout_width="match_parent"
