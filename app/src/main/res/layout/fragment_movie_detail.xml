@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{@string/movie_genres_format(movieDetail.genres.toString())}"
+
             app:layout_constraintStart_toStartOf="@id/movie_detail_title"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_title"
             tools:text="Genres" />
@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{@string/movie_homepage_format(movieDetail.homepage)}"
             app:layout_constraintStart_toStartOf="@+id/movie_detail_genres"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_genres"
             tools:text="Homepage" />
@@ -64,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{@string/movie_imdb_format(movieDetail.imdb_id)}"
             app:layout_constraintStart_toStartOf="@+id/movie_detail_homepage"
             app:layout_constraintTop_toBottomOf="@+id/movie_detail_homepage"
             tools:text="IMDB_id" />

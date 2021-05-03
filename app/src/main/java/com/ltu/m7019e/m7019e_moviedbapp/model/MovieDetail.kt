@@ -1,8 +1,7 @@
 package com.ltu.m7019e.m7019e_moviedbapp.model
 
-class MovieDetail (
-    var id: Long,
-    var genres: List<String>,
+data class MovieDetail (
+    var genres: List<MovieGenre>,
     var homepage: String,
     var imdb_id: String
 )

@@ -3,9 +3,6 @@
     <string name="action_load_popular_movies">Popular Movies</string>
     <string name="action_load_top_rated_movies">Top Rated Movies</string>
     <string name="action_load_saved_movies">Saved Movies</string>
-    <string name="movie_genres_format">Genres: %s</string>
-    <string name="movie_homepage_format">Homepage: %s</string>
-    <string name="movie_imdb_format">IMDB Page: https://www.imdb.com/title/%s</string>
 
     <string name="movie_list_fragment_label">Movie List Fragment</string>
     <string name="movie_detail_fragment_label">Movie Detail Fragment</string>
@@ -13,5 +10,7 @@
     <string name="back_label">Back</string>
     <string name="placeholder_text">PLACEHOLDER TEXT</string>
     <string name="movies_are_being_loaded">Movies Are being loaded</string>
+    <string name="movie_review_label">Movie Reviews</string>
+    <string name="movie_trailers_label">Movie trailers</string>
 
 </resources>
