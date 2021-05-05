@@ -1,7 +1,7 @@
 package com.ltu.m7019e.m7019e_moviedbapp.database
 
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieDetail
-
+/*
 class MoviesDetail {
     val list = mutableListOf<MovieDetail>()
 
@@ -88,3 +88,4 @@ class MoviesDetail {
         )
     }
 }
+ */

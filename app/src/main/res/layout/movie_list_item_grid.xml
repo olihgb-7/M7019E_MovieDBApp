@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
+
+        <variable
+            name="clickListener"
+            type="com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieListClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movie_list_item_grid_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(movie)}">
+
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:posterImageUrl="@{movie.posterPath}"
+            tools:srcCompat="@tools:sample/avatars" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

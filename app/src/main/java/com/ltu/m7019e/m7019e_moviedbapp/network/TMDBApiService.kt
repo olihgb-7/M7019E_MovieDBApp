@@ -1,4 +1,7 @@
+import com.ltu.m7019e.m7019e_moviedbapp.network.MovieDetailResponse
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieResponse
+import com.ltu.m7019e.m7019e_moviedbapp.network.MovieReviewResponse
+import com.ltu.m7019e.m7019e_moviedbapp.network.MovieTrailerResponse
 import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -8,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import retrofit2.http.Url
 import java.util.concurrent.TimeUnit
 
 /**
@@ -46,6 +50,7 @@ private val movieListRetrofit = Retrofit.Builder()
     .baseUrl(Constants.MOVIE_LIST_BASE_URL)
     .build()
 
+
 interface TMDBApiService {
     @GET("popular")
     suspend fun getPopularMovies(
@@ -58,6 +63,30 @@ interface TMDBApiService {
         @Query("api_key")
         apiKey: String = Constants.API_KEY
     ): MovieResponse
+
+    @GET
+    suspend fun getMovieDetails(
+        @Url
+        movieId: String,
+        @Query("api_key")
+        apiKey: String = Constants.API_KEY
+    ): MovieDetailResponse
+
+    @GET
+    suspend fun getMovieReviews(
+        @Url
+        movieId: String,
+        @Query("api_key")
+        apiKey: String = Constants.API_KEY
+    ): MovieReviewResponse
+
+    @GET
+    suspend fun getMovieTrailers(
+        @Url
+        movieId: String,
+        @Query("api_key")
+        apiKey: String = Constants.API_KEY
+    ): MovieTrailerResponse
 }
 
 object TMDBApi {
