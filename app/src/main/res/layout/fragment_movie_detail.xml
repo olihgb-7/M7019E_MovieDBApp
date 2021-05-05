@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="movie"
             type="com.ltu.m7019e.m7019e_moviedbapp.model.Movie" />
         <variable
             name="movieDetail"
             type="com.ltu.m7019e.m7019e_moviedbapp.model.MovieDetail" />
+        <variable
+            name="viewmodel"
+            type="com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +29,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="Shows movie backdrop" />
 
         <TextView
             android:id="@+id/movie_detail_title"
@@ -85,6 +90,30 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/save_to_database"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> viewmodel.onSaveMovieButtonClicked(movie)}"
+            android:visibility="@{viewmodel.isFavourite() ? View.GONE : View.VISIBLE}"
+            android:text="@string/favourite"
+            app:layout_constraintBottom_toTopOf="@+id/next_to_third_fragment"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/remove_from_database"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> viewmodel.onRemoveMovieButtonClicked(movie)}"
+            android:visibility="@{viewmodel.isFavourite() ? View.VISIBLE : View.GONE}"
+            android:text="@string/remove_favourite"
+            app:layout_constraintBottom_toTopOf="@+id/next_to_third_fragment"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

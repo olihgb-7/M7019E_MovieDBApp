@@ -12,5 +12,7 @@
     <string name="movies_are_being_loaded">Movies Are being loaded</string>
     <string name="movie_review_label">Movie Reviews</string>
     <string name="movie_trailers_label">Movie trailers</string>
+    <string name="favourite">Favourite</string>
+    <string name="remove_favourite">Remove favourite</string>
 
 </resources>

@@ -5,13 +5,21 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
+import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieGenre
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieDetailResponse
 import kotlinx.coroutines.launch
 
-class MovieDetailViewModel(movieId: Long, application: Application) : AndroidViewModel(application) {
+class MovieDetailViewModel(private val movieDatabaseDao: MovieDatabaseDao, movieId: Long, application: Application, movie: Movie) : AndroidViewModel(application) {
 
     var id = movieId
+
+    private val _isFavourite = MutableLiveData<Boolean>()
+    val isFavourite: LiveData<Boolean>
+        get() {
+            return _isFavourite
+        }
 
     private val _movieGenres = MutableLiveData<List<MovieGenre>>()
     val movieGenres: LiveData<List<MovieGenre>>
@@ -32,6 +40,7 @@ class MovieDetailViewModel(movieId: Long, application: Application) : AndroidVie
         }
 
     init {
+        setIsFavourite(movie)
         getMovieDetails()
     }
 
@@ -41,6 +50,26 @@ class MovieDetailViewModel(movieId: Long, application: Application) : AndroidVie
             _movieGenres.value = movieDetailResponse.genres
             _movieHomepage.value = movieDetailResponse.homepage
             _movieImdbId.value = movieDetailResponse.imdb_id
+        }
+    }
+
+    fun setIsFavourite(movie: Movie) {
+        viewModelScope.launch {
+            _isFavourite.value = movieDatabaseDao.isFavourite(movie.id)
+        }
+    }
+
+    fun onSaveMovieButtonClicked(movie: Movie) {
+        viewModelScope.launch {
+            movieDatabaseDao.insert(movie)
+            setIsFavourite(movie)
+        }
+    }
+
+    fun onRemoveMovieButtonClicked(movie: Movie) {
+        viewModelScope.launch {
+            movieDatabaseDao.delete(movie)
+            setIsFavourite(movie)
         }
     }
 }

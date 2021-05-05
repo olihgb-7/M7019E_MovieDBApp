@@ -35,6 +35,8 @@ class MovieListFragment : Fragment() {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
+    private var lastSelectedMenuOption = R.id.action_load_popular_movies
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -97,17 +99,29 @@ class MovieListFragment : Fragment() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_load_popular_movies -> {
+                lastSelectedMenuOption = R.id.action_load_popular_movies
                 viewModel.getPopularMovies()
             }
             R.id.action_load_top_rated_movies -> {
+                lastSelectedMenuOption = R.id.action_load_top_rated_movies
                 viewModel.getTopRatedMovies()
             }
             R.id.action_load_saved_movies -> {
+                lastSelectedMenuOption = R.id.action_load_saved_movies
                 viewModel.getSavedMovies()
             }
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        when(lastSelectedMenuOption) {
+            R.id.action_load_saved_movies -> {
+                viewModel.getSavedMovies()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

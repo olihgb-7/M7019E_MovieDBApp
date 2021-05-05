@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabase
+import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieDetailBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
@@ -24,6 +26,8 @@ class MovieDetailFragment : Fragment() {
     private lateinit var viewModel: MovieDetailViewModel
     private lateinit var viewModelFactory: MovieDetailViewModelFactory
 
+    private lateinit var movieDatabaseDao: MovieDatabaseDao
+
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -38,12 +42,16 @@ class MovieDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMovieDetailBinding.inflate(inflater)
+        binding.lifecycleOwner = this
         movie = MovieDetailFragmentArgs.fromBundle(requireArguments()).movie
-        binding.movie = movie
 
         val application = requireNotNull(this.activity).application
-        viewModelFactory = MovieDetailViewModelFactory(movie.id, application)
+        movieDatabaseDao = MovieDatabase.getInstance(application).movieDatabaseDao
+
+        viewModelFactory = MovieDetailViewModelFactory(movieDatabaseDao, movie.id, application, movie)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieDetailViewModel::class.java)
+
+
 
         movieGenres = mutableListOf<String>()
         viewModel.movieGenres.observe(viewLifecycleOwner, { genreList ->
@@ -62,6 +70,9 @@ class MovieDetailFragment : Fragment() {
             movieDetailImbdId = imdb_id
             binding.movieDetailImdbId.text = "IMDB Page: " + Constants.IMDB_BASE_URL + imdb_id
         })
+
+        binding.movie = movie
+        binding.viewmodel = viewModel
 
         return binding.root
     }
