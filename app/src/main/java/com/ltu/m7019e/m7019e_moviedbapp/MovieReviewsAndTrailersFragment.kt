@@ -63,6 +63,7 @@ class MovieReviewsAndTrailersFragment : Fragment() {
             }
         })
 
+        // Setup for linking to YouTube app
         viewModel.navigateToTrailerLink.observe(viewLifecycleOwner, { trailer ->
             trailer?.let {
                 val intent = Intent(Intent.ACTION_VIEW)

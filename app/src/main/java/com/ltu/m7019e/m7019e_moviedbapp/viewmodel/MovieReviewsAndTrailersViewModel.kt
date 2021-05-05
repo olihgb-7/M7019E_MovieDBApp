@@ -45,7 +45,6 @@ class MovieReviewsAndTrailersViewModel(movieId: Long, application: Application) 
             _reviewList.value = movieReviewResponse.results
         }
     }
-
     private fun getMovieTrailers() {
         viewModelScope.launch {
             val movieTrailerResponse: MovieTrailerResponse = TMDBApi.movieListRetrofitService.getMovieTrailers("$id/videos")
