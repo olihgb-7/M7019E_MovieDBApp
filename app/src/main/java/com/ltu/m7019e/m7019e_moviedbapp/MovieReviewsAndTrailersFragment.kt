@@ -15,6 +15,7 @@ import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieTrailerClickListener
 import com.ltu.m7019e.m7019e_moviedbapp.adapter.MovieTrailersAdapter
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieReviewsAndTrailersBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
+import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieReviewsAndTrailersViewModel
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieReviewsAndTrailersViewModelFactory
@@ -70,6 +71,25 @@ class MovieReviewsAndTrailersFragment : Fragment() {
                 intent.data = Uri.parse(Constants.YOUTUBE_BASE_URL + trailer.key)
                 startActivity(intent)
                 viewModel.onTrailerNavigated()
+            }
+        })
+
+        // Setup for status of reviews and trailers
+        viewModel.dataFetchStatus.observe(viewLifecycleOwner, { status ->
+            status?.let {
+                when(status) {
+                    DataFetchStatus.LOADING -> {
+                        binding.reviewsAndTrailersStatusImage.visibility = View.VISIBLE
+                        binding.reviewsAndTrailersStatusImage.setImageResource(R.drawable.loading_animation)
+                    }
+                    DataFetchStatus.ERROR -> {
+                        binding.reviewsAndTrailersStatusImage.visibility = View.VISIBLE
+                        binding.reviewsAndTrailersStatusImage.setImageResource(R.drawable.ic_connection_error)
+                    }
+                    DataFetchStatus.DONE -> {
+                        binding.reviewsAndTrailersStatusImage.visibility = View.GONE
+                    }
+                }
             }
         })
 
