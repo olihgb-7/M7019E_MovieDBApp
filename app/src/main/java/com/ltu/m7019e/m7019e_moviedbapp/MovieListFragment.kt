@@ -55,7 +55,13 @@ class MovieListFragment : Fragment() {
                 viewModel.onMovieListItemClicked(movie)
             })
         binding.movieListRv.adapter = movieListAdapter
-        viewModel.movieList.observe( viewLifecycleOwner, { movieList ->
+        viewModel.cachedMovieList.observe( viewLifecycleOwner, { movieList ->
+            movieList?.let {
+                movieListAdapter.submitList(movieList)
+            }
+        })
+
+        viewModel.savedMovieList.observe( viewLifecycleOwner, { movieList ->
             movieList?.let {
                 movieListAdapter.submitList(movieList)
             }
@@ -100,11 +106,11 @@ class MovieListFragment : Fragment() {
         when (item.itemId) {
             R.id.action_load_popular_movies -> {
                 lastSelectedMenuOption = R.id.action_load_popular_movies
-                viewModel.getPopularMovies()
+                viewModel.refreshPopularMoviesFromRepository()
             }
             R.id.action_load_top_rated_movies -> {
                 lastSelectedMenuOption = R.id.action_load_top_rated_movies
-                viewModel.getTopRatedMovies()
+                viewModel.refreshTopRatedMoviesFromRepository()
             }
             R.id.action_load_saved_movies -> {
                 lastSelectedMenuOption = R.id.action_load_saved_movies
@@ -126,21 +132,5 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-//        val movies = Movies()
-//
-//        val movieList = view.findViewById<LinearLayout>(R.id.movie_list_ll)
-//        val movieItem = movieList.findViewById<View>(R.id.movie_1)
-//        val movieTitle = movieItem.findViewById<TextView>(R.id.movie_title)
-//        val moviePoster = movieItem.findViewById<ImageView>(R.id.movie_poster)
-//
-//        movieTitle.text = movies.list[0].title
-//
-//        Glide
-//                .with(this)
-//                .load(Constants.POSTER_IMAGE_BASE_URL + Constants.IMAGE_WIDTH + movies.list[0].posterPath)
-//                .into(moviePoster);
     }
 }

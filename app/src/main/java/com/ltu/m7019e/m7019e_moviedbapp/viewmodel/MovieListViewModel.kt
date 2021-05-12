@@ -7,12 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.database.Movies
+import com.ltu.m7019e.m7019e_moviedbapp.database.getDatabase
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieResponse
+import com.ltu.m7019e.m7019e_moviedbapp.repository.MovieRepository
+import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.lang.Exception
 
 class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, application: Application) : AndroidViewModel(application) {
+
+    private val movieRepository = MovieRepository(getDatabase(application))
 
     private val _dataFetchStatus = MutableLiveData<DataFetchStatus>()
     val dataFetchStatus: LiveData<DataFetchStatus>
@@ -20,10 +27,16 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
             return _dataFetchStatus
         }
 
-    private val _movieList = MutableLiveData<List<Movie>>()
-    val movieList: LiveData<List<Movie>>
+    private var _savedMovieList =  MutableLiveData<List<Movie>>()
+    val savedMovieList: LiveData<List<Movie>>
         get() {
-            return _movieList
+            return _savedMovieList
+        }
+
+    private var _cachedMovieList: LiveData<List<Movie>>
+    val cachedMovieList: LiveData<List<Movie>>
+        get() {
+            return _cachedMovieList
         }
 
     private val _navigateToMovieDetail = MutableLiveData<Movie>()
@@ -33,10 +46,11 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
         }
 
     init {
-        getPopularMovies()
+        _cachedMovieList = movieRepository.movies
         _dataFetchStatus.value = DataFetchStatus.LOADING
     }
 
+    /*
     fun getPopularMovies() {
         viewModelScope.launch {
             try{
@@ -64,16 +78,37 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
             }
         }
     }
+     */
 
     fun getSavedMovies() {
         viewModelScope.launch {
-            _movieList.value = movieDatabaseDao.getAllMovies()
+            _savedMovieList.value = movieDatabaseDao.getAllMovies()
         }
     }
 
-    fun addMovie() {
+    fun refreshPopularMoviesFromRepository() {
         viewModelScope.launch {
-            _movieList.value?.let { movieDatabaseDao.insert(it.get(0)) }
+            try {
+                movieRepository.refreshPopularMovies()
+                _dataFetchStatus.value = DataFetchStatus.DONE
+            }
+            catch (e: Exception) {
+                _cachedMovieList = MutableLiveData()
+                _dataFetchStatus.value = DataFetchStatus.ERROR
+            }
+        }
+    }
+
+    fun refreshTopRatedMoviesFromRepository() {
+        viewModelScope.launch {
+            try {
+                movieRepository.refreshTopRatedMovies()
+                _dataFetchStatus.value = DataFetchStatus.DONE
+            }
+            catch (e: Exception) {
+                _cachedMovieList = MutableLiveData()
+                _dataFetchStatus.value = DataFetchStatus.ERROR
+            }
         }
     }
 

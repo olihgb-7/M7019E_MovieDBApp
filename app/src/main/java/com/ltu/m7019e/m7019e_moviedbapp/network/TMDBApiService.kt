@@ -1,7 +1,4 @@
-import com.ltu.m7019e.m7019e_moviedbapp.network.MovieDetailResponse
-import com.ltu.m7019e.m7019e_moviedbapp.network.MovieResponse
-import com.ltu.m7019e.m7019e_moviedbapp.network.MovieReviewResponse
-import com.ltu.m7019e.m7019e_moviedbapp.network.MovieTrailerResponse
+import com.ltu.m7019e.m7019e_moviedbapp.network.*
 import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

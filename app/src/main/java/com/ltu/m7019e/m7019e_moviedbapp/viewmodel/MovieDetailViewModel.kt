@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
+import com.ltu.m7019e.m7019e_moviedbapp.database.getDatabase
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieGenre
 import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieDetailResponse
+import com.ltu.m7019e.m7019e_moviedbapp.repository.MovieRepository
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
