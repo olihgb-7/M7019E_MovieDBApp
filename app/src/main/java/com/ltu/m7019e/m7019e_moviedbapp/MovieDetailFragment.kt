@@ -13,6 +13,7 @@ import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabase
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.FragmentMovieDetailBinding
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
+import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieDetailViewModel
 import com.ltu.m7019e.m7019e_moviedbapp.viewmodel.MovieDetailViewModelFactory
@@ -71,8 +72,29 @@ class MovieDetailFragment : Fragment() {
             binding.movieDetailImdbId.text = "IMDB Page: " + Constants.IMDB_BASE_URL + imdb_id
         })
 
+        // Setup for status of reviews and trailers
+        viewModel.dataFetchStatus.observe(viewLifecycleOwner, { status ->
+            status?.let {
+                when(status) {
+                    DataFetchStatus.LOADING -> {
+                        binding.detailsStatusImage.visibility = View.VISIBLE
+                        binding.detailsStatusImage.setImageResource(R.drawable.loading_animation)
+                    }
+                    DataFetchStatus.ERROR -> {
+                        binding.detailsStatusImage.visibility = View.VISIBLE
+                        binding.detailsStatusImage.setImageResource(R.drawable.ic_connection_error)
+                    }
+                    DataFetchStatus.DONE -> {
+                        binding.detailsStatusImage.visibility = View.GONE
+                    }
+                }
+            }
+        })
+
         binding.movie = movie
         binding.viewmodel = viewModel
+
+
 
         return binding.root
     }

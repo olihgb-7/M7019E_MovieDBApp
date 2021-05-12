@@ -14,10 +14,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <VideoView
-            android:id="@+id/movie_trailer_vv"
+        <WebView
+            android:id="@+id/movie_trailer_wv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -32,13 +32,12 @@
             android:id="@+id/movie_trailer_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@{movieTrailer.name}"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_trailer_vv"
+            app:layout_constraintStart_toStartOf="@+id/movie_trailer_wv"
+            app:layout_constraintTop_toBottomOf="@+id/movie_trailer_wv"
             tools:text="Movie Trailer Name" />
 
         <TextView

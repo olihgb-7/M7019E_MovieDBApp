@@ -1,37 +1,34 @@
 package com.ltu.m7019e.m7019e_moviedbapp.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ltu.m7019e.m7019e_moviedbapp.databinding.MovieTrailerItemBinding
-import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieTrailer
-import com.ltu.m7019e.m7019e_moviedbapp.utils.Constants
-import timber.log.Timber
 
-
-class MovieTrailersAdapter(private val trailerClickListener: MovieTrailerClickListener) : ListAdapter<MovieTrailer, MovieTrailersAdapter.ViewHolder>(MoviewTrailerDiffCallback()) {
+class MovieTrailersAdapter(private val trailerClickListener: MovieTrailerClickListener) : ListAdapter<MovieTrailer, MovieTrailersAdapter.ViewHolder>(
+    MoviewTrailerDiffCallback()
+) {
 
     class ViewHolder(private var binding: MovieTrailerItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movieTrailer: MovieTrailer, trailerClickListener: MovieTrailerClickListener) {
             binding.movieTrailer = movieTrailer
             binding.clickListener = trailerClickListener
-            binding.executePendingBindings()
 
-            if (binding.movieTrailerLink.text == "YouTube") {
-                binding.movieTrailerVv.visibility = View.GONE
-                binding.movieTrailerLink.visibility = View.VISIBLE
+            if (binding.movieTrailer!!.site == "YouTube") {
+                binding.movieTrailerWv.settings.javaScriptEnabled = true
+                binding.movieTrailerWv.settings.pluginState = WebSettings.PluginState.ON
+                binding.movieTrailerWv.loadUrl("https://www.youtube.com/embed/" + binding.movieTrailer!!.key)
+                binding.movieTrailerWv.webChromeClient = WebChromeClient()
             }
             else {
-                binding.movieTrailerVv.visibility = View.VISIBLE
                 binding.movieTrailerLink.visibility = View.GONE
-                //binding.movieTrailerVv.setVideoPath()
-                //binding.movieTrailerVv.start()
             }
 
             binding.executePendingBindings()

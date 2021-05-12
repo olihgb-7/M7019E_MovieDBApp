@@ -115,5 +115,15 @@
             app:layout_constraintBottom_toTopOf="@+id/next_to_third_fragment"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <ImageView
+            android:id="@+id/details_status_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/save_to_database"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_detail_imdb_id"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

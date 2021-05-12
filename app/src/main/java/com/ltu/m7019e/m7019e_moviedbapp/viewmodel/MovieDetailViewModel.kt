@@ -8,12 +8,20 @@ import androidx.lifecycle.viewModelScope
 import com.ltu.m7019e.m7019e_moviedbapp.database.MovieDatabaseDao
 import com.ltu.m7019e.m7019e_moviedbapp.model.Movie
 import com.ltu.m7019e.m7019e_moviedbapp.model.MovieGenre
+import com.ltu.m7019e.m7019e_moviedbapp.network.DataFetchStatus
 import com.ltu.m7019e.m7019e_moviedbapp.network.MovieDetailResponse
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MovieDetailViewModel(private val movieDatabaseDao: MovieDatabaseDao, movieId: Long, application: Application, movie: Movie) : AndroidViewModel(application) {
 
     var id = movieId
+
+    private val _dataFetchStatus = MutableLiveData<DataFetchStatus>()
+    val dataFetchStatus: LiveData<DataFetchStatus>
+        get() {
+            return _dataFetchStatus
+        }
 
     private val _isFavourite = MutableLiveData<Boolean>()
     val isFavourite: LiveData<Boolean>
@@ -46,10 +54,19 @@ class MovieDetailViewModel(private val movieDatabaseDao: MovieDatabaseDao, movie
 
     private fun getMovieDetails() {
         viewModelScope.launch {
-            val movieDetailResponse: MovieDetailResponse = TMDBApi.movieListRetrofitService.getMovieDetails("$id")
-            _movieGenres.value = movieDetailResponse.genres
-            _movieHomepage.value = movieDetailResponse.homepage
-            _movieImdbId.value = movieDetailResponse.imdb_id
+            try {
+                val movieDetailResponse: MovieDetailResponse = TMDBApi.movieListRetrofitService.getMovieDetails("$id")
+                _movieGenres.value = movieDetailResponse.genres
+                _movieHomepage.value = movieDetailResponse.homepage
+                _movieImdbId.value = movieDetailResponse.imdb_id
+                _dataFetchStatus.value = DataFetchStatus.DONE
+            }
+            catch (e: Exception) {
+                _movieGenres.value = arrayListOf()
+                _movieHomepage.value = ""
+                _movieImdbId.value = ""
+                _dataFetchStatus.value = DataFetchStatus.ERROR
+            }
         }
     }
 
