@@ -9,12 +9,15 @@ import kotlinx.coroutines.withContext
 class MovieRepository(private val database: CachedDatabase) {
 
     val movies: LiveData<List<Movie>> = database.cacheDatabaseDao.getMovies()
+    enum class MovieSelection { NONE , POPULAR, TOP_RATED }
+    var movieSelectionStatus: MovieSelection = MovieSelection.NONE
 
     suspend fun refreshPopularMovies() {
         withContext(Dispatchers.IO) {
             val popularMovies = TMDBApi.movieListRetrofitService.getPopularMovies()
             database.cacheDatabaseDao.deleteAll()
             database.cacheDatabaseDao.insertAll(popularMovies.results)
+            movieSelectionStatus = MovieSelection.POPULAR
         }
     }
 
@@ -23,7 +26,7 @@ class MovieRepository(private val database: CachedDatabase) {
             val topRatedMovies = TMDBApi.movieListRetrofitService.getTopRatedMovies()
             database.cacheDatabaseDao.deleteAll()
             database.cacheDatabaseDao.insertAll(topRatedMovies.results)
+            movieSelectionStatus = MovieSelection.TOP_RATED
         }
     }
-
 }

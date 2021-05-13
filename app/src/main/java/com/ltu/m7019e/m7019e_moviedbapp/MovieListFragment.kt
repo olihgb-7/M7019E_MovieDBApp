@@ -121,6 +121,7 @@ class MovieListFragment : Fragment() {
         return true
     }
 
+    /*
     override fun onResume() {
         super.onResume()
         when(lastSelectedMenuOption) {
@@ -129,6 +130,7 @@ class MovieListFragment : Fragment() {
             }
         }
     }
+     */
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

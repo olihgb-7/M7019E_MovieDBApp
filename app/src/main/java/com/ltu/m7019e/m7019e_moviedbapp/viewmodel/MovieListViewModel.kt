@@ -33,7 +33,7 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
             return _savedMovieList
         }
 
-    private var _cachedMovieList: LiveData<List<Movie>>
+    private var _cachedMovieList: LiveData<List<Movie>> = movieRepository.movies
     val cachedMovieList: LiveData<List<Movie>>
         get() {
             return _cachedMovieList
@@ -46,39 +46,8 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
         }
 
     init {
-        _cachedMovieList = movieRepository.movies
         _dataFetchStatus.value = DataFetchStatus.LOADING
     }
-
-    /*
-    fun getPopularMovies() {
-        viewModelScope.launch {
-            try{
-                val movieResponse: MovieResponse = TMDBApi.movieListRetrofitService.getPopularMovies()
-                _movieList.value = movieResponse.results
-                _dataFetchStatus.value = DataFetchStatus.DONE
-            }
-            catch (e: Exception) {
-                _dataFetchStatus.value = DataFetchStatus.ERROR
-                _movieList.value = arrayListOf()
-            }
-        }
-    }
-
-    fun getTopRatedMovies() {
-        viewModelScope.launch {
-            try{
-                val movieResponse: MovieResponse = TMDBApi.movieListRetrofitService.getTopRatedMovies()
-                _movieList.value = movieResponse.results
-                _dataFetchStatus.value = DataFetchStatus.DONE
-            }
-            catch (e: Exception) {
-                _dataFetchStatus.value = DataFetchStatus.ERROR
-                _movieList.value = arrayListOf()
-            }
-        }
-    }
-     */
 
     fun getSavedMovies() {
         viewModelScope.launch {
@@ -93,7 +62,6 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
                 _dataFetchStatus.value = DataFetchStatus.DONE
             }
             catch (e: Exception) {
-                _cachedMovieList = MutableLiveData()
                 _dataFetchStatus.value = DataFetchStatus.ERROR
             }
         }
@@ -106,7 +74,7 @@ class MovieListViewModel(private val movieDatabaseDao: MovieDatabaseDao, applica
                 _dataFetchStatus.value = DataFetchStatus.DONE
             }
             catch (e: Exception) {
-                _cachedMovieList = MutableLiveData()
+
                 _dataFetchStatus.value = DataFetchStatus.ERROR
             }
         }
